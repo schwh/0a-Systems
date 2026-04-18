@@ -6,11 +6,8 @@ import {
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   ComposedChart,
 } from "recharts";
-import {
-  LayoutDashboard, BarChart3, Table2, Layers, Globe,
-  Activity, Search, Sun, Moon, Menu, Settings,
-  ArrowUpRight, ArrowDownRight,
-} from "lucide-react";
+import { ArrowUpRight, ArrowDownRight, Check } from "lucide-react";
+import { THEMES, THEME_ORDER } from "./ThemeContext";
 
 // ═══════════════════════════════════════════════════════════════
 //  DATA
@@ -89,36 +86,7 @@ const tableData = [
   { id: 8, country: "Mexico", event: "Teacher Protest", date: "2014-11-10", pScore: 0.931, model: "nMIL^Δ", f1: 0.75, precursors: 9, status: "detected" },
 ];
 
-// ═══════════════════════════════════════════════════════════════
-//  THEME
-// ═══════════════════════════════════════════════════════════════
-
-const themes = {
-  dark: {
-    bg: "#0b0b10", panel: "#0f0f16",
-    divider: "rgba(255,255,255,0.04)", dividerStrong: "rgba(255,255,255,0.07)",
-    text: "#e8e8f0", textSec: "#7a7a95", textMut: "#4a4a62",
-    accent: "#818cf8", accentDim: "rgba(129,140,248,0.10)",
-    green: "#34d399", greenDim: "rgba(52,211,153,0.10)",
-    red: "#f87171", redDim: "rgba(248,113,113,0.10)",
-    amber: "#fbbf24", amberDim: "rgba(251,191,36,0.10)",
-    purple: "#a78bfa", blue: "#60a5fa", cyan: "#22d3ee",
-    sidebar: "#0a0a0f", sidebarHi: "rgba(129,140,248,0.06)",
-    chartGrid: "rgba(255,255,255,0.03)",
-  },
-  light: {
-    bg: "#f7f7f9", panel: "#ffffff",
-    divider: "rgba(0,0,0,0.05)", dividerStrong: "rgba(0,0,0,0.09)",
-    text: "#111118", textSec: "#6b6b82", textMut: "#9a9ab0",
-    accent: "#6366f1", accentDim: "rgba(99,102,241,0.07)",
-    green: "#059669", greenDim: "rgba(5,150,105,0.07)",
-    red: "#dc2626", redDim: "rgba(220,38,38,0.07)",
-    amber: "#d97706", amberDim: "rgba(217,119,6,0.07)",
-    purple: "#7c3aed", blue: "#2563eb", cyan: "#0891b2",
-    sidebar: "#ffffff", sidebarHi: "rgba(99,102,241,0.04)",
-    chartGrid: "rgba(0,0,0,0.04)",
-  },
-};
+// Theme comes from ThemeContext (5 palettes defined there).
 
 // ═══════════════════════════════════════════════════════════════
 //  MICRO COMPONENTS
@@ -208,7 +176,7 @@ const Divider = ({ c }) => <div style={{ borderTop: `1px solid ${c.divider}`, ma
 //  PAGE: OVERVIEW  — KPI strip only
 // ═══════════════════════════════════════════════════════════════
 
-const PageOverview = ({ c }) => {
+export const PageOverview = ({ c }) => {
   const kpis = [
     { label: "Best F1 (nMIL^Δ)", value: "0.75", change: "+4.2%", up: true, sub: "History day 5" },
     { label: "Avg P-Score", value: "0.691", change: "+2.8%", up: true, sub: "Across 8 events" },
@@ -295,7 +263,7 @@ const PageOverview = ({ c }) => {
 //  PAGE: MODELS  — F1 history, cosine confidence, β sensitivity
 // ═══════════════════════════════════════════════════════════════
 
-const PageModels = ({ c }) => {
+export const PageModels = ({ c }) => {
   const [activeRange, setActiveRange] = useState("10D");
 
   return (
@@ -374,7 +342,7 @@ const PageModels = ({ c }) => {
 //  PAGE: EVENTS  — Table, storyline, distribution
 // ═══════════════════════════════════════════════════════════════
 
-const PageEvents = ({ c }) => {
+export const PageEvents = ({ c }) => {
   const [country, setCountry] = useState("all");
   const [sortBy, setSortBy] = useState("pScore");
   const [sortDir, setSortDir] = useState("desc");
@@ -507,7 +475,7 @@ const PageEvents = ({ c }) => {
 //  PLACEHOLDER PAGES
 // ═══════════════════════════════════════════════════════════════
 
-const PagePlaceholder = ({ title, c }) => (
+export const PagePlaceholder = ({ title, c }) => (
   <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 300 }}>
     <div style={{ textAlign: "center" }}>
       <div style={{ fontSize: 14, fontWeight: 600, color: c.textSec }}>{title}</div>
@@ -517,118 +485,69 @@ const PagePlaceholder = ({ title, c }) => (
 );
 
 // ═══════════════════════════════════════════════════════════════
-//  SHELL — Sidebar + Header + Page Router
+//  PAGE: SETTINGS — Theme picker
 // ═══════════════════════════════════════════════════════════════
 
-export default function Dashboard() {
-  const [isDark, setIsDark] = useState(true);
-  const [activeNav, setActiveNav] = useState("overview");
-  const [collapsed, setCollapsed] = useState(false);
-  const c = isDark ? themes.dark : themes.light;
-
-  const navItems = [
-    { id: "overview", icon: LayoutDashboard, label: "Overview" },
-    { id: "models", icon: BarChart3, label: "Models" },
-    { id: "events", icon: Table2, label: "Events" },
-    { id: "pipeline", icon: Layers, label: "Pipeline" },
-    { id: "countries", icon: Globe, label: "Countries" },
-    { id: "settings", icon: Settings, label: "Settings" },
-  ];
-
-  const pages = {
-    overview: <PageOverview c={c} />,
-    models: <PageModels c={c} />,
-    events: <PageEvents c={c} />,
-    pipeline: <PagePlaceholder title="Pipeline Monitor" c={c} />,
-    countries: <PagePlaceholder title="Country Analytics" c={c} />,
-    settings: <PagePlaceholder title="Settings" c={c} />,
-  };
-
+export const PageSettings = ({ c, themeId, setThemeId }) => {
   return (
-    <div style={{
-      display: "flex", height: "100vh", width: "100%", background: c.bg,
-      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, sans-serif',
-      color: c.text, overflow: "hidden",
-    }}>
-      {/* ── Sidebar ─────────────────────────────── */}
+    <div>
+      <SectionHead title="Theme" subtitle="Choose the color palette for the app" c={c} />
       <div style={{
-        width: collapsed ? 52 : 192, background: c.sidebar,
-        borderRight: `1px solid ${c.divider}`, display: "flex", flexDirection: "column",
-        transition: "width 0.25s cubic-bezier(0.16,1,0.3,1)", overflow: "hidden", flexShrink: 0,
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+        gap: 14,
       }}>
-        <div style={{
-          height: 48, display: "flex", alignItems: "center", gap: 10,
-          padding: collapsed ? "0" : "0 16px", justifyContent: collapsed ? "center" : "flex-start",
-          borderBottom: `1px solid ${c.divider}`,
-        }}>
-          <div style={{
-            width: 22, height: 22, borderRadius: 6,
-            background: `linear-gradient(135deg, ${c.accent}, ${c.purple})`,
-            display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
-          }}>
-            <Activity size={11} color="#fff" />
-          </div>
-          {!collapsed && <span style={{ fontSize: 13, fontWeight: 700, color: c.text, whiteSpace: "nowrap" }}>0a Systems</span>}
-        </div>
-
-        <div style={{ padding: "10px 8px", flex: 1, display: "flex", flexDirection: "column", gap: 1 }}>
-          {navItems.map(item => {
-            const active = activeNav === item.id;
-            return (
-              <div key={item.id} onClick={() => setActiveNav(item.id)} style={{
-                display: "flex", alignItems: "center", gap: 10,
-                padding: collapsed ? "8px 0" : "7px 12px", borderRadius: 7, cursor: "pointer",
-                background: active ? c.sidebarHi : "transparent",
-                color: active ? c.accent : c.textMut, fontSize: 12, fontWeight: active ? 600 : 500,
-                transition: "all 0.12s ease", justifyContent: collapsed ? "center" : "flex-start",
-                whiteSpace: "nowrap",
-              }}>
-                <item.icon size={15} />
-                {!collapsed && item.label}
+        {THEME_ORDER.map(id => {
+          const meta = THEMES[id];
+          const t = meta.theme;
+          const active = themeId === id;
+          return (
+            <div
+              key={id}
+              onClick={() => setThemeId(id)}
+              style={{
+                padding: 0,
+                borderRadius: 12,
+                cursor: "pointer",
+                border: `1.5px solid ${active ? c.accent : c.divider}`,
+                background: c.panel,
+                overflow: "hidden",
+                transition: "border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease",
+                boxShadow: active ? `0 0 0 3px ${c.accentDim}` : "none",
+              }}
+              onMouseEnter={e => { if (!active) e.currentTarget.style.borderColor = c.dividerStrong; }}
+              onMouseLeave={e => { if (!active) e.currentTarget.style.borderColor = c.divider; }}
+            >
+              {/* Swatch strip */}
+              <div style={{ display: "flex", height: 56 }}>
+                <div style={{ flex: 1, background: t.bg }} />
+                <div style={{ flex: 1, background: t.panel }} />
+                <div style={{ flex: 1, background: t.accent }} />
+                <div style={{ flex: 0.6, background: t.purple }} />
               </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* ── Main ────────────────────────────────── */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
-        {/* Header */}
-        <div style={{
-          height: 48, display: "flex", alignItems: "center", justifyContent: "space-between",
-          padding: "0 20px", borderBottom: `1px solid ${c.divider}`, flexShrink: 0,
-        }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-            <Menu size={15} color={c.textMut} style={{ cursor: "pointer" }} onClick={() => setCollapsed(!collapsed)} />
-            <span style={{ fontSize: 13, fontWeight: 600, color: c.text }}>
-              {navItems.find(n => n.id === activeNav)?.label}
-            </span>
-            <span style={{ fontSize: 10, fontWeight: 700, color: c.green, letterSpacing: "0.06em", background: c.greenDim, padding: "2px 7px", borderRadius: 4 }}>LIVE</span>
-          </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-            <div style={{
-              display: "flex", alignItems: "center", gap: 6, padding: "5px 12px",
-              borderRadius: 7, border: `1px solid ${c.divider}`, fontSize: 11, color: c.textMut, width: 160,
-            }}>
-              <Search size={12} /> Search... <span style={{ marginLeft: "auto", fontSize: 9, fontFamily: "monospace", opacity: 0.5 }}>⌘K</span>
+              {/* Label */}
+              <div style={{ padding: "12px 14px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: c.text }}>{meta.label}</div>
+                  <div style={{ fontSize: 10, color: c.textMut, marginTop: 2 }}>{meta.description}</div>
+                </div>
+                {active && (
+                  <div style={{
+                    width: 20, height: 20, borderRadius: "50%",
+                    background: c.accent, color: "#fff",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                  }}>
+                    <Check size={12} />
+                  </div>
+                )}
+              </div>
             </div>
-            <div onClick={() => setIsDark(!isDark)} style={{ width: 30, height: 30, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: c.textMut, borderRadius: 7 }}>
-              {isDark ? <Sun size={14} /> : <Moon size={14} />}
-            </div>
-            <div style={{
-              width: 24, height: 24, borderRadius: 6,
-              background: `linear-gradient(135deg, ${c.accent}, ${c.purple})`,
-              display: "flex", alignItems: "center", justifyContent: "center",
-              fontSize: 10, fontWeight: 700, color: "#fff", cursor: "pointer",
-            }}>S</div>
-          </div>
-        </div>
-
-        {/* Page content */}
-        <div style={{ flex: 1, overflow: "auto", padding: "20px 20px 40px" }}>
-          {pages[activeNav]}
-        </div>
+          );
+        })}
       </div>
     </div>
   );
-}
+};
+
+// Dashboard shell removed — AppShell now wraps all pages (including Home)
+// for consistent navigation. Page components are exported above.
