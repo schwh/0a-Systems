@@ -21,16 +21,16 @@ const TITLES: Record<NavTarget, string> = {
 
 function Router() {
   const [page, setPage] = useState<NavTarget>("home");
-  const { theme: c, themeId, setThemeId } = useTheme();
+  const { theme, themeId, setThemeId } = useTheme();
 
   const content: Record<NavTarget, React.ReactNode> = {
     home: <HomeContent />,
-    overview: <PageOverview c={c} />,
-    models: <PageModels c={c} />,
-    events: <PageEvents c={c} />,
-    pipeline: <PagePlaceholder title="Pipeline Monitor" c={c} />,
-    countries: <PagePlaceholder title="Country Analytics" c={c} />,
-    settings: <PageSettings c={c} themeId={themeId} setThemeId={setThemeId} />,
+    overview: <PageOverview theme={theme} />,
+    models: <PageModels theme={theme} />,
+    events: <PageEvents theme={theme} />,
+    pipeline: <PagePlaceholder title="Pipeline Monitor" theme={theme} />,
+    countries: <PagePlaceholder title="Country Analytics" theme={theme} />,
+    settings: <PageSettings theme={theme} themeId={themeId} setThemeId={setThemeId} />,
   };
 
   return (

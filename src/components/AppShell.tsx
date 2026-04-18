@@ -12,14 +12,14 @@ interface Props {
 }
 
 export default function AppShell({ current, onNavigate, title, fullBleed, children }: Props) {
-  const { theme: c } = useTheme();
+  const { theme } = useTheme();
 
   return (
     <div
       style={{
         minHeight: "100vh",
-        background: c.bg,
-        color: c.text,
+        background: theme.bg,
+        color: theme.text,
         fontFamily:
           '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, sans-serif',
         position: "relative",
@@ -37,7 +37,7 @@ export default function AppShell({ current, onNavigate, title, fullBleed, childr
             left: 60,
             fontSize: 12,
             fontWeight: 600,
-            color: c.textSec,
+            color: theme.textSec,
             letterSpacing: "-0.01em",
             display: "flex",
             alignItems: "center",
@@ -46,7 +46,7 @@ export default function AppShell({ current, onNavigate, title, fullBleed, childr
             transition: "color 0.5s ease",
           }}
         >
-          <span style={{ color: c.textMut }}>/</span>
+          <span style={{ color: theme.textMut }}>/</span>
           <span key={title} style={{ animation: "titleFade 0.6s cubic-bezier(0.16,1,0.3,1)" }}>
             {title}
           </span>

@@ -33,7 +33,7 @@ const OPEN_MS = 340;
 const CLOSE_MS = 220;
 
 export default function CornerMenu({ current, onNavigate }: Props) {
-  const { theme: c } = useTheme();
+  const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
   const [hover, setHover] = useState(false);
@@ -99,8 +99,8 @@ export default function CornerMenu({ current, onNavigate }: Props) {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: active || hover ? c.accentDim : "transparent",
-          color: active || hover ? c.text : c.textSec,
+          background: active || hover ? theme.accentDim : "transparent",
+          color: active || hover ? theme.text : theme.textSec,
           transition: "background 0.25s cubic-bezier(0.16,1,0.3,1), color 0.25s ease",
           backdropFilter: hover || active ? "blur(10px)" : undefined,
         }}
@@ -115,8 +115,8 @@ export default function CornerMenu({ current, onNavigate }: Props) {
             top: 40,
             left: 0,
             minWidth: 188,
-            background: c.panel,
-            border: `1px solid ${c.dividerStrong}`,
+            background: theme.panel,
+            border: `1px solid ${theme.dividerStrong}`,
             borderRadius: 10,
             padding: 5,
             boxShadow: "0 14px 40px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.02)",
@@ -138,8 +138,8 @@ export default function CornerMenu({ current, onNavigate }: Props) {
               fontWeight: 700,
               letterSpacing: "0.14em",
               textTransform: "uppercase",
-              color: c.textMut,
-              borderBottom: `1px solid ${c.divider}`,
+              color: theme.textMut,
+              borderBottom: `1px solid ${theme.divider}`,
               marginBottom: 4,
             }}
           >
@@ -168,7 +168,7 @@ function Row({
   active: boolean;
   onClick: () => void;
 }) {
-  const { theme: c } = useTheme();
+  const { theme } = useTheme();
   const [hover, setHover] = useState(false);
   return (
     <div
@@ -184,8 +184,8 @@ function Row({
         cursor: "pointer",
         fontSize: 12,
         fontWeight: active ? 600 : 500,
-        color: active ? c.accent : hover ? c.text : c.textSec,
-        background: hover ? c.sidebarHi : "transparent",
+        color: active ? theme.accent : hover ? theme.text : theme.textSec,
+        background: hover ? theme.sidebarHi : "transparent",
         transition: "background 0.12s ease, color 0.12s ease",
       }}
     >

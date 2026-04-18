@@ -179,6 +179,10 @@ export const THEMES: Record<ThemeId, ThemeMeta> = {
 
 export const THEME_ORDER: ThemeId[] = ["Default", "Azoth", "Midnight", "Forest", "Wave"];
 
+// Helper for any component that takes the theme plus its own props:
+//   const Metric = ({ theme, label }: Themed<{ label: string }>) => ...
+export type Themed<P = {}> = P & { theme: Theme };
+
 interface ThemeCtx {
   themeId: ThemeId;
   theme: Theme;
