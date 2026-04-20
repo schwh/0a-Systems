@@ -2,12 +2,15 @@
 import { useEffect, useRef, useState } from "react";
 import {
   Menu, Home, LayoutDashboard, BarChart3, Table2, Layers, Globe, Settings,
+  DollarSign, Dna,
 } from "lucide-react";
 import { useTheme } from "./ThemeContext";
 
 export type NavTarget =
   | "home"
   | "dashboard"
+  | "finance"
+  | "biotechnology"
   | "models"
   | "events"
   | "pipeline"
@@ -17,6 +20,8 @@ export type NavTarget =
 const ITEMS: { id: NavTarget; label: string; icon: React.ComponentType<{ size?: number }> }[] = [
   { id: "home", label: "Home", icon: Home },
   { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { id: "finance", label: "Finance", icon: DollarSign },
+  { id: "biotechnology", label: "Biotechnology", icon: Dna },
   { id: "models", label: "Models", icon: BarChart3 },
   { id: "events", label: "Events", icon: Table2 },
   { id: "pipeline", label: "Pipeline", icon: Layers },
@@ -84,7 +89,7 @@ export default function CornerMenu({ current, onNavigate }: Props) {
   const active = mounted && visible;
 
   return (
-    <div ref={ref} style={{ position: "absolute", top: 16, left: 16, zIndex: 50 }}>
+    <div ref={ref} style={{ position: "fixed", top: 16, left: 16, zIndex: 50 }}>
       <button
         aria-label="Menu"
         onClick={toggle}

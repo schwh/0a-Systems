@@ -12,6 +12,8 @@ import {
 const TITLES: Record<NavTarget, string> = {
   home: "Home",
   dashboard: "Dashboard",
+  finance: "Finance",
+  biotechnology: "Biotechnology",
   models: "Models",
   events: "Events",
   pipeline: "Pipeline",
@@ -40,6 +42,8 @@ function Router() {
       </>
     ),
     dashboard: <PageDashboard theme={theme} />,
+    finance: <PageDashboard theme={theme} />,
+    biotechnology: <PageDashboard theme={theme} />,
     models: <PageModels theme={theme} />,
     events: <PageEvents theme={theme} />,
     pipeline: <PagePlaceholder title="Pipeline Monitor" theme={theme} />,
