@@ -2,6 +2,7 @@
 import { ReactNode } from "react";
 import { useTheme } from "./ThemeContext";
 import CornerMenu, { NavTarget } from "./CornerMenu";
+import TopBar from "./TopBar";
 
 interface Props {
   current: NavTarget;
@@ -28,6 +29,7 @@ export default function AppShell({ current, onNavigate, title, fullBleed, childr
       }}
     >
       <CornerMenu current={current} onNavigate={onNavigate} />
+      <TopBar current={current} onNavigate={onNavigate} />
 
       {title && (
         <div
