@@ -7,7 +7,7 @@ import { useTheme } from "./ThemeContext";
 
 export type NavTarget =
   | "home"
-  | "overview"
+  | "dashboard"
   | "models"
   | "events"
   | "pipeline"
@@ -16,7 +16,7 @@ export type NavTarget =
 
 const ITEMS: { id: NavTarget; label: string; icon: React.ComponentType<{ size?: number }> }[] = [
   { id: "home", label: "Home", icon: Home },
-  { id: "overview", label: "Overview", icon: LayoutDashboard },
+  { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
   { id: "models", label: "Models", icon: BarChart3 },
   { id: "events", label: "Events", icon: Table2 },
   { id: "pipeline", label: "Pipeline", icon: Layers },

@@ -24,10 +24,10 @@ import { EventsTable } from "./events/EventsTable";
 // Theme comes from ThemeContext (5 palettes defined there).
 
 // ═══════════════════════════════════════════════════════════════
-//  PAGE: OVERVIEW  — composes KPI strip, sparklines, system status
+//  PAGE: DASHBOARD  — composes KPI strip, sparklines, system status
 // ═══════════════════════════════════════════════════════════════
 
-export const PageOverview = ({ theme }: Themed) => (
+export const PageDashboard = ({ theme }: Themed) => (
   <div>
     <KpiStrip theme={theme} />
     <Divider theme={theme} />

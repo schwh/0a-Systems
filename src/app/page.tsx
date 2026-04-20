@@ -6,12 +6,12 @@ import AppShell from "@/components/AppShell";
 import { NavTarget } from "@/components/CornerMenu";
 import HomeContent from "@/components/Homepage";
 import {
-  PageOverview, PageModels, PageEvents, PagePlaceholder, PageSettings,
+  PageDashboard, PageModels, PageEvents, PagePlaceholder, PageSettings,
 } from "@/components/Dashboard";
 
 const TITLES: Record<NavTarget, string> = {
   home: "Home",
-  overview: "Overview",
+  dashboard: "Dashboard",
   models: "Models",
   events: "Events",
   pipeline: "Pipeline",
@@ -24,8 +24,22 @@ function Router() {
   const { theme, themeId, setThemeId } = useTheme();
 
   const content: Record<NavTarget, React.ReactNode> = {
-    home: <HomeContent />,
-    overview: <PageOverview theme={theme} />,
+    home: (
+      <>
+        <HomeContent />
+        <div
+          style={{
+            padding: "64px 32px 48px",
+            maxWidth: 1280,
+            margin: "0 auto",
+            borderTop: `1px solid ${theme.divider}`,
+          }}
+        >
+          <PageDashboard theme={theme} />
+        </div>
+      </>
+    ),
+    dashboard: <PageDashboard theme={theme} />,
     models: <PageModels theme={theme} />,
     events: <PageEvents theme={theme} />,
     pipeline: <PagePlaceholder title="Pipeline Monitor" theme={theme} />,
