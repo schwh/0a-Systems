@@ -14,28 +14,18 @@ import {
 import {
   f1HistoryData, betaSensitivity, cosineTimeSeries,
 } from "@/data/dashboard";
-import { KpiStrip } from "./overview/KpiStrip";
-import { TrendSparklines } from "./overview/TrendSparklines";
-import { SystemStatus } from "./overview/SystemStatus";
 import { StorylineTimeline, type CountryFilter } from "./events/StorylineTimeline";
 import { ScoreDistribution } from "./events/ScoreDistribution";
 import { EventsTable } from "./events/EventsTable";
+import { TerminalDashboard } from "./TerminalDashboard";
 
 // Theme comes from ThemeContext (5 palettes defined there).
 
 // ═══════════════════════════════════════════════════════════════
-//  PAGE: DASHBOARD  — composes KPI strip, sparklines, system status
+//  PAGE: DASHBOARD — terminal-driven canvas
 // ═══════════════════════════════════════════════════════════════
 
-export const PageDashboard = ({ theme }: Themed) => (
-  <div>
-    <KpiStrip theme={theme} />
-    <Divider theme={theme} />
-    <TrendSparklines theme={theme} />
-    <Divider theme={theme} />
-    <SystemStatus theme={theme} />
-  </div>
-);
+export const PageDashboard = ({ theme }: Themed) => <TerminalDashboard theme={theme} />;
 
 // ═══════════════════════════════════════════════════════════════
 //  PAGE: MODELS  — F1 history, cosine confidence, β sensitivity

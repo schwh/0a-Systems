@@ -1,39 +1,5 @@
-// Demo datasets for the Dashboard pages (Overview, Models, Events).
+// Demo datasets for the Dashboard pages (Models, Events).
 // Pure data — no React, no theme.
-
-// KPI cards on the Overview page. `trend` is the 10-day sparkline series,
-// colocated with each card so the two stay index-consistent.
-export const kpis = [
-  {
-    label: "Best F1 (nMIL^Δ)", value: "0.75", change: "+4.2%", up: true, sub: "History day 5",
-    trend: [0.67, 0.68, 0.74, 0.71, 0.75, 0.75, 0.71, 0.74, 0.67, 0.74],
-  },
-  {
-    label: "Avg P-Score", value: "0.691", change: "+2.8%", up: true, sub: "Across 8 events",
-    trend: [0.55, 0.61, 0.63, 0.68, 0.70, 0.69, 0.72, 0.69, 0.71, 0.69],
-  },
-  {
-    label: "Detection Rate", value: "75.0%", change: "-6.3%", up: false, sub: "6 / 8 detected",
-    trend: [0.80, 0.78, 0.75, 0.72, 0.75, 0.73, 0.76, 0.75, 0.74, 0.75],
-  },
-  {
-    label: "Precursors / Event", value: "6.5", change: "+1.2", up: true, sub: "Avg lead time",
-    trend: [4.2, 5.0, 5.5, 6.0, 5.8, 6.2, 6.5, 6.3, 6.6, 6.5],
-  },
-  {
-    label: "Countries Active", value: "3", change: null, up: true, sub: "AR · MX · BR",
-    trend: [2, 2, 3, 3, 3, 3, 3, 3, 3, 3],
-  },
-];
-
-// System-status row — `tone` is mapped to a theme color in the component
-// (keeping data theme-agnostic).
-export const systemStatus = [
-  { label: "Document Ingestion", status: "Active", tone: "ok" },
-  { label: "Feature Extraction", status: "Active", tone: "ok" },
-  { label: "Model Inference", status: "Active", tone: "ok" },
-  { label: "Alert Dispatch", status: "Idle", tone: "warn" },
-];
 
 export const f1HistoryData = [
   { day: 1, SVM: 0.41, MISVM: 0.66, rMIL: 0.65, nMIL: 0.67 },
